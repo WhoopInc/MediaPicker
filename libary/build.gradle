@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: "maven"
 
 //./gradlew bintrayUpload
 publish {
@@ -37,5 +38,18 @@ android {
 
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://nexus.qa.whoop.com/repository/maven-snapshots") {
+                authentication(userName: "lorenzo", password: "changeme")
+            }
+            pom.version = "1.0.0"
+            pom.artifactId = "media-picker"
+            pom.groupId = "com.whoop"
+        }
+    }
 }
